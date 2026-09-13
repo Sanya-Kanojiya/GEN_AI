@@ -136,7 +136,8 @@ ${jobDescription}
 
 
     const response = await groq.chat.completions.create({
-        model: "llama-3.3-70b-versatile",
+        // model: "llama-3.3-70b-versatile",
+        model: "openai/gpt-oss-120b",
         messages: [
             {
                 role: "user",
@@ -233,7 +234,8 @@ The HTML should be directly usable by Puppeteer to generate a PDF.
 
     const response = await groq.chat.completions.create({
 
-        model: "llama-3.3-70b-versatile",
+        // model: "llama-3.3-70b-versatile",
+        model: "openai/gpt-oss-120b",
 
         messages: [
             {
