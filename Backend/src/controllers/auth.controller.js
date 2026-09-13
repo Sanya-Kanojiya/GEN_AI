@@ -60,9 +60,9 @@ async function registerUserController(req, res) {
         process.env.JWT_SECRET,
         { expiresIn: "1d" }
     )
-     res.cookie("token", token)  /*tokens ko cookies me set kr dege */
+    res.cookie("token", token)  /*tokens ko cookies me set kr dege */
 
-   
+
 
 
 
@@ -111,12 +111,16 @@ async function loginUserController(req, res) {
         { expiresIn: "1d" }
     )
 
-    res.cookie("token", token)
+    res.cookie("token", token, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production",
+        sameSite: process.env.NODE_ENV === "production" ? "none" : "lax"
+    });
     res.status(200).json({
         message: "User loggedIn successfully.",
         user: {
             id: user._id,
-            username: user.username,
+            username: user.username, 
             email: user.email
         }
     })
@@ -125,7 +129,7 @@ async function loginUserController(req, res) {
 
 
 
-/*-----------logot--------- */
+/*-----------logout--------- */
 /**
  * @name logoutUserController
  * @description clear token from user cookie and add the token in blacklist
@@ -179,4 +183,3 @@ module.exports = {
 }
 
 
- 

@@ -4,10 +4,22 @@ const cors = require("cors")
 
 const app = express()
 app.use(cookieParser())
+
+const allowedOrigins = [
+    "http://localhost:5173",
+    "https://gen-ai-two-sigma.vercel.app"
+];
+
 app.use(cors({
-    origin: "https://gen-ai-two-sigma.vercel.app",
+    origin: function (origin, callback) {
+        if (!origin || allowedOrigins.includes(origin)) {
+            callback(null, true);
+        } else {
+            callback(new Error("Not allowed by CORS"));
+        }
+    },
     credentials: true
-}))
+}));
 
 
 app.use(express.json())
